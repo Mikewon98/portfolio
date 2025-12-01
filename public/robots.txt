@@ -1,0 +1,46 @@
+# robots.txt for Michael W Metaferia Portfolio
+
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Disallow crawling of API routes (if you have any)
+Disallow: /api/
+
+# Disallow crawling of admin or private pages (if you have any)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Disallow crawling of specific file types (optional)
+# Disallow: /*.pdf$
+# Disallow: /*.json$
+
+# Sitemap location (update with your actual domain)
+Sitemap: https://michaelyze.com/sitemap.xml
+
+# Crawl-delay (optional - usually not needed for modern sites)
+# Crawl-delay: 10
+
+# Specific rules for different search engines (optional)
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Prevent AI crawlers from training on your content (optional)
+# Uncomment these if you want to block AI training bots
+# User-agent: GPTBot
+# Disallow: /
+
+# User-agent: CCBot
+# Disallow: /
+
+# User-agent: anthropic-ai
+# Disallow: /
+
+# User-agent: Claude-Web
+# Disallow: /
