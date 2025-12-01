@@ -39,13 +39,46 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const blogs = await fetchBlogs({ url: "/api/blogs" });
-  const blogPosts = blogs.data.map((blog: BlogData) => ({
-    url: `${baseUrl}/blog/${blog.slug}`,
-    lastModified: new Date(blog.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  // Handle API fetch failure gracefully during build
+  let blogPosts: MetadataRoute.Sitemap = [];
+
+  try {
+    if (!process.env.NEXT_PUBLIC_STRAPI_API_URL) {
+      console.log("Skipping blog posts in sitemap - API URL not available");
+      return routes;
+    }
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs`,
+      {
+        signal: AbortSignal.timeout(5000),
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      console.warn("API returned non-OK status, skipping static generation");
+      return routes;
+    }
+
+    const blogs = await res.json();
+
+    if (blogs.data && blogs.data.length > 0) {
+      blogPosts = blogs.data.map((blog: BlogData) => ({
+        url: `${baseUrl}/blog/${blog.slug}`,
+        lastModified: new Date(blog.date),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      }));
+    }
+  } catch (error) {
+    console.warn(
+      "Failed to fetch blogs for sitemap, continuing with static routes only:",
+      error
+    );
+    // Return static routes only if blog fetch fails
+    return routes;
+  }
 
   return [...routes, ...blogPosts];
 }
