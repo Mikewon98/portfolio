@@ -8,16 +8,16 @@ export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 // export async function generateStaticParams() {
-//   if (!process.env.NEXT_PUBLIC_STRAPI_API_URL) {
+//   if (!process.env.NEXT_PUBLIC_STRAPI_URL) {
 //     console.log(
-//       "Skipping static generation - NEXT_PUBLIC_STRAPI_API_URL not set"
+//       "Skipping static generation - NEXT_PUBLIC_STRAPI_URL not set"
 //     );
 //     return [];
 //   }
 
 //   try {
 //     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs`,
+//       `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs`,
 //       {
 //         signal: AbortSignal.timeout(5000),
 //         cache: "no-store",
@@ -224,7 +224,7 @@ export async function generateMetadata({
 // export async function generateStaticParams() {
 //   try {
 //     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs`,
+//       `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs`,
 //       {
 //         signal: AbortSignal.timeout(5000),
 //       }

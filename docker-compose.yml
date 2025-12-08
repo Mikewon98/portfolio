@@ -9,14 +9,14 @@ services:
       - "30"
       - "--rolling-restart"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock  
+      - /var/run/docker.sock:/var/run/docker.sock
   reverse-proxy:
     image: traefik:v3.6
     container_name: traefik
     restart: unless-stopped
     command:
       - "--providers.docker=true"
-      - "--api.insecure=true"  
+      - "--api.insecure=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entryPoints.web.address=:80"
       - "--entryPoints.websecure.address=:443"
@@ -31,7 +31,7 @@ services:
       - "80:80"
       # The https port
       - "443:443"
-      # The web UI ((enabled by api.insecure=true)   
+      # The web UI ((enabled by api.insecure=true)
       - "8080:8080"
     volumes:
       # So that Traefik can listen to docker events
@@ -40,24 +40,24 @@ services:
       - letsencrypt:/letsencrypt
   blog:
     image: ghcr.io/mikewon98/blog:latest
-    labels: 
-        - "traefik.enable=true"
-        - "traefik.http.routers.blog.rule=Host(`michaelyze.com`)"
-        - "traefik.http.routers.blog.entrypoints=websecure"
-        - "traefik.http.services.blog.loadbalancer.server.port=3000"
-        - "traefik.http.routers.blog.tls.certresolver=myresolver"
-        - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-        - "traefik.http.routers.blog-http.middlewares=redirect-to-https"
-        - "traefik.http.routers.blog-http.rule=Host(`michaelyze.com`)"
-        - "traefik.http.routers.blog-http.entrypoints=web"
-        - "com.centurylinklabs.watchtower.enable=true"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blog.rule=Host(`michaelyze.com`)"
+      - "traefik.http.routers.blog.entrypoints=websecure"
+      - "traefik.http.services.blog.loadbalancer.server.port=3000"
+      - "traefik.http.routers.blog.tls.certresolver=myresolver"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.blog-http.middlewares=redirect-to-https"
+      - "traefik.http.routers.blog-http.rule=Host(`michaelyze.com`)"
+      - "traefik.http.routers.blog-http.entrypoints=web"
+      - "com.centurylinklabs.watchtower.enable=true"
     deploy:
-      replicas: 3    
+      replicas: 3
     build:
       context: ./
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_STRAPI_API_URL: https://deserving-bouquet-d41dc59d47.strapiapp.com
+        NEXT_PUBLIC_STRAPI_URL: https://deserving-bouquet-d41dc59d47.strapiapp.com
     env_file:
       - .env
 volumes:

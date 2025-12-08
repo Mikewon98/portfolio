@@ -43,18 +43,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogPosts: MetadataRoute.Sitemap = [];
 
   try {
-    if (!process.env.NEXT_PUBLIC_STRAPI_API_URL) {
+    if (!process.env.NEXT_PUBLIC_STRAPI_URL) {
       console.log("Skipping blog posts in sitemap - API URL not available");
       return routes;
     }
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs`,
-      {
-        signal: AbortSignal.timeout(5000),
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs`, {
+      signal: AbortSignal.timeout(5000),
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       console.warn("API returned non-OK status, skipping static generation");

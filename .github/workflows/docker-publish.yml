@@ -31,4 +31,4 @@ jobs:
           push: true
           tags: ghcr.io/mikewon98/blog:latest
           build-args: |
-            NEXT_PUBLIC_STRAPI_URL=https://deserving-bouquet-d41dc59d47.strapiapp.com
+            NEXT_PUBLIC_STRAPI_URL=${{ secrets.NEXT_PUBLIC_STRAPI_URL }}
