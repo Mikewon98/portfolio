@@ -109,7 +109,7 @@ export default function HeroSection() {
               Software Developer
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-              Results-driven Frontend Developer with 2+ years of specialized
+              Results-driven Front-end Developer with 2+ years of specialized
               experience in Next.js and React ecosystem. I build scalable,
               high-performance web applications including payment gateways,
               booking systems, and e-commerce platforms.
