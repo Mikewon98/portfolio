@@ -108,11 +108,29 @@ export default function HeroSection() {
             <p className="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
               Software Developer
             </p>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-              Results-driven Front-end Developer with 2+ years of specialized
-              experience in Next.js and React ecosystem. I build scalable,
-              high-performance web applications including payment gateways,
-              booking systems, and e-commerce platforms.
+            <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+              Hi, I'm Michael Wondwossen, a Front-end Developer with 3+ years of
+              hands-on experience building modern, high-performance web
+              applications using Next.js and React. I specialize in transforming
+              complex business requirements into clean, intuitive, and scalable
+              user interfaces. My work blends technical depth with a strong
+              focus on user experience, performance, and reliability. Throughout
+              my journey, I've had the opportunity to develop end-to-end
+              solutions for both local and international teams. I thrive in
+              collaborative environments, working closely with designers,
+              backend engineers, and business partners to deliver features that
+              are both functional and visually cohesive.
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+              My experience spans UI/UX implementation, secure authentication
+              workflows, API integrations, and deployment on modern hosting
+              platforms. I am passionate about continuous learning and building
+              meaningful products that solve real-world problems. Every project
+              I take on is an opportunity to grow, refine my craft, and deliver
+              work that truly makes an impact. I'm always excited to collaborate
+              on innovative ideas whether you're building a platform from
+              scratch or improving an existing system, I'd love to be part of
+              your journey.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-8">

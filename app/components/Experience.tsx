@@ -79,9 +79,9 @@ export default function Experience() {
               }`}
             >
               <div
-                className={`w-full md:w-5/12 ${
-                  index % 2 === 0 ? "md:text-right" : ""
-                }`}
+                className={`w-full md:w-5/12 
+                  ${index % 2 === 0 ? "md:text-left" : ""}
+                  `}
               >
                 <div className="glass rounded-2xl p-6 hover:shadow-2xl transition-all duration-300">
                   <div className="flex items-center gap-2 mb-2">

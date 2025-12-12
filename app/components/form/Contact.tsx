@@ -14,24 +14,6 @@ export default function Contact() {
     FormData
   >(submitContactForm, {});
 
-  const handleSubmit = async (e: any) => {
-    // e.preventDefault();
-    // setIsSending(true);
-    // setSendStatus(null);
-    // try {
-    //   await SendEmail({
-    //     to: "mikewon98@gmail.com",
-    //     subject: `Portfolio Contact: ${formData.subject}`,
-    //     body: `From: ${formData.name} (${formData.email})\n\n${formData.message}`,
-    //   });
-    //   setSendStatus("success");
-    //   setFormData({ name: "", email: "", subject: "", message: "" });
-    // } catch (error) {
-    //   setSendStatus("error");
-    // }
-    // setIsSending(false);
-  };
-
   return (
     <div id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -125,7 +107,7 @@ export default function Contact() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
