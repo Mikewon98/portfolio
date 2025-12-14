@@ -53,11 +53,11 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
     deploy:
       replicas: 3
-    build:
-      context: ./
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_STRAPI_URL: https://deserving-bouquet-d41dc59d47.strapiapp.com
+    # build:
+    #   context: ./
+    #   dockerfile: Dockerfile
+    #   args:
+    #     NEXT_PUBLIC_STRAPI_URL: https://deserving-bouquet-d41dc59d47.strapiapp.com
     env_file:
       - .env
 volumes:
