@@ -2,11 +2,11 @@ import { Metadata } from "next";
 
 export const siteMetadata: Metadata = {
   title: {
-    default: "Michael W Metaferia - Full Stack Developer & Software Engineer",
-    template: "%s | Michael W Metaferia",
+    default: "Michael Wondwossen - Full Stack Developer & Software Engineer",
+    template: "%s | Michael Wondwossen",
   },
   description:
-    "Portfolio of Michael W Metaferia - Full Stack Developer specializing in modern web technologies, React, Next.js, and innovative software solutions.",
+    "Portfolio of Michael Wondwossen - Full Stack Developer specializing in modern web technologies, React, Next.js, and innovative software solutions.",
   keywords: [
     "Michael Wondwossen Metaferia",
     "Michael W Metaferia",
@@ -27,10 +27,10 @@ export const siteMetadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://michaelyze.com",
-    title: "Michael W Metaferia - Full Stack Developer",
+    title: "Michael Wondwossen - Full Stack Developer",
     description:
       "Portfolio showcasing projects, experience, and expertise in modern web development",
-    siteName: "Michael W Metaferia Portfolio",
+    siteName: "Michael Wondwossen Portfolio",
   },
   robots: {
     index: true,

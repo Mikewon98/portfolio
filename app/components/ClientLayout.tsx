@@ -145,7 +145,7 @@ export default function ClientLayout({
                 MW
               </div>
               <span className="text-xl font-bold text-gray-900 dark:text-white">
-                Michael W Metaferia
+                Michael Wondwossen
               </span>
             </Link>
 
@@ -231,7 +231,7 @@ export default function ClientLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400">
-              © 2025 Michael W Metaferia. All rights reserved.
+              © 2025 Michael Wondwossen. All rights reserved.
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
               Built with passion and code ✨
