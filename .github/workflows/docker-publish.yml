@@ -29,6 +29,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/mikewon98/blog:latest
+          tags: |
+            ghcr.io/mikewon98/blog:latest
+            ghcr.io/mikewon98/blog:${{ github.sha }}
           build-args: |
             NEXT_PUBLIC_STRAPI_URL=${{ secrets.NEXT_PUBLIC_STRAPI_URL }}
