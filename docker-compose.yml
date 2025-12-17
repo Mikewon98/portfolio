@@ -8,10 +8,14 @@ services:
       - "--interval"
       - "30"
       - "--rolling-restart"
+      - "--stop-timeout"
+      - "60s"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=300
   reverse-proxy:
     image: traefik:v3.6
     container_name: traefik
@@ -42,6 +46,7 @@ services:
       - letsencrypt:/letsencrypt
   blog:
     image: ghcr.io/mikewon98/blog:latest
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.blog.rule=Host(`michaelyze.com`)"
@@ -52,14 +57,15 @@ services:
       - "traefik.http.routers.blog-http.middlewares=redirect-to-https"
       - "traefik.http.routers.blog-http.rule=Host(`michaelyze.com`)"
       - "traefik.http.routers.blog-http.entrypoints=web"
+      # Add cache control headers to prevent stale client code
+      - "traefik.http.middlewares.cache-control.headers.customresponseheaders.Cache-Control=no-cache, no-store, must-revalidate"
+      - "traefik.http.routers.blog.middlewares=cache-control"
       - "com.centurylinklabs.watchtower.enable=true"
     deploy:
       replicas: 3
-    # build:
-    #   context: ./
-    #   dockerfile: Dockerfile
-    #   args:
-    #     NEXT_PUBLIC_STRAPI_URL: https://deserving-bouquet-d41dc59d47.strapiapp.com
+      update_config:
+        parallelism: 3 # Update all replicas at once to avoid version mismatch
+        delay: 0s
     env_file:
       - .env
 volumes:
