@@ -1,11 +1,9 @@
 services:
   watchtower:
-    image: containrrr/watchtower
+    image: containrrr/watchtower:latest
     restart: unless-stopped
     command:
       - "--label-enable"
-      - "--interval"
-      - "30"
       - "--rolling-restart"
       - "--stop-timeout"
       - "60s"
