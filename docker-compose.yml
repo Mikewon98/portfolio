@@ -1,6 +1,6 @@
 services:
   watchtower:
-    image: containrrr/watchtower:latest
+    image: nickfedor/watchtower
     restart: unless-stopped
     command:
       - "--label-enable"
