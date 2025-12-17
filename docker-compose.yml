@@ -2,6 +2,7 @@
 services:
   watchtower:
     image: containrrr/watchtower
+    restart: unless-stopped
     command:
       - "--label-enable"
       - "--interval"
@@ -43,9 +44,7 @@ services:
       # So that Traefik can listen to docker events
       - /var/run/docker.sock:/var/run/docker.sock
       # Lets encrypt
-      - letsencrypt:/letsencrypt
-    networks:
-      - web    
+      - letsencrypt:/letsencrypt    
   blog:
     image: ghcr.io/mikewon98/blog:latest
     restart: unless-stopped
@@ -72,6 +71,3 @@ services:
       - .env
 volumes:
   letsencrypt:
-networks:
-  web:
-    driver: bridge
