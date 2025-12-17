@@ -1,4 +1,3 @@
-version: "3.8"
 
 services:
   watchtower:
@@ -21,6 +20,7 @@ services:
     container_name: traefik
     restart: unless-stopped
     command:
+      - "--log.level=DEBUG"
       - "--providers.docker=true"
       - "--api.insecure=true"
       - "--providers.docker.exposedbydefault=false"
@@ -38,12 +38,14 @@ services:
       # The https port
       - "443:443"
       # The web UI ((enabled by api.insecure=true)
-      # - "8080:8080"
+      - "8080:8080"
     volumes:
       # So that Traefik can listen to docker events
       - /var/run/docker.sock:/var/run/docker.sock
       # Lets encrypt
       - letsencrypt:/letsencrypt
+    networks:
+      - web    
   blog:
     image: ghcr.io/mikewon98/blog:latest
     restart: unless-stopped
@@ -70,3 +72,6 @@ services:
       - .env
 volumes:
   letsencrypt:
+networks:
+  web:
+    driver: bridge
