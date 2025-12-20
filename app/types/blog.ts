@@ -111,6 +111,10 @@ export interface BlogData {
   FeaturedImage: MediaFile;
 }
 
+export interface FeaturedBlogsProps {
+  blogs: BlogData[];
+}
+
 // Pagination metadata
 interface PaginationMeta {
   page: number;
@@ -149,10 +153,6 @@ export interface SingleBlogResponse {
 //     width: number;
 //     height: number;
 //   };
-// }
-
-// export interface FeaturedBlogsProps {
-//   blogs: Blog[];
 // }
 
 // export interface Content {

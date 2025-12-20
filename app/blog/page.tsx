@@ -1,12 +1,12 @@
 import { fetchBlogs } from "../service/blogService";
-import { Blog } from "../types/blog";
+import { BlogData } from "../types/blog";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function BlogPage() {
   const blog = await fetchBlogs({ url: "/api/blogs?populate=*" });
 
-  const blogs: Blog[] = blog.data || [];
+  const blogs: BlogData[] = blog.data || [];
 
   return (
     <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
