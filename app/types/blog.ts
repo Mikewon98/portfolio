@@ -10,6 +10,7 @@ interface TextChild {
 interface LinkChild {
   type: "link";
   text?: string;
+  bold?: boolean;
   url: string;
   children: TextChild[];
 }
@@ -34,14 +35,16 @@ interface CodeBlock {
   children: TextChild[];
 }
 
-interface ListItemBlock {
+export interface ListItemBlock {
   type: "list-item";
   text?: string;
+  bold?: boolean;
   children: ContentChild[];
 }
 
-interface ListBlock {
+export interface ListBlock {
   text?: string;
+  bold?: boolean;
   type: "list";
   format: "ordered" | "unordered";
   children: (ListItemBlock | ListBlock)[];
