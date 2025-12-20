@@ -5,6 +5,7 @@ services:
     command:
       - "--label-enable"
       - "--rolling-restart"
+      - "--include-restarting"
       - "--stop-timeout"
       - "60s"
     volumes:
