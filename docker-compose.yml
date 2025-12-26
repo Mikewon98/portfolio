@@ -81,6 +81,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.blog.loadbalancer.server.port=3000"
+      - "traefik.http.routers.blog.service=blog"
       - "com.centurylinklabs.watchtower.enable=true"
     env_file:
       - .env
@@ -92,6 +93,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.blog.loadbalancer.server.port=3000"
+      - "traefik.http.routers.blog.service=blog"
       - "com.centurylinklabs.watchtower.enable=true"
     env_file:
       - .env
