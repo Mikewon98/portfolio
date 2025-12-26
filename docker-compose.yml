@@ -78,9 +78,9 @@ services:
       #   delay: 0s
       # Replace with above if causing issues
       update_config:
-      parallelism: 1 # Update one at a time
-      delay: 10s # Wait 10s between updates
-      order: start-first # Start new container before stopping old one
+        parallelism: 1 # Update one at a time
+        delay: 10s # Wait 10s between updates
+        order: start-first # Start new container before stopping old one
     env_file:
       - .env
 volumes:
