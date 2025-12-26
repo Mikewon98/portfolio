@@ -1,13 +1,14 @@
+import { fetchBlogs, fetchDetailBlogs } from "@/app/service/blogService";
 import { BlogData, Content, ListBlock } from "@/app/types/blog";
-import { fetchBlogs } from "@/app/service/blogService";
 import CopyDiv from "@/app/components/CopyDiv";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export const dynamicParams = true;
+export const revalidate = 3600;
 
 export default async function BlogDetailPage({
   params,
@@ -17,17 +18,23 @@ export default async function BlogDetailPage({
   const { slug } = await params;
 
   try {
-    const blogData = await fetchBlogs({
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+    // Timeout fetch after 10s
+
+    const blogData = await fetchDetailBlogs({
       url: `/api/blogs?filters[slug][$eq]=${slug}&populate=*`,
+      signal: controller.signal,
     });
 
     if (!blogData.data || blogData.data.length === 0) {
       notFound();
     }
 
-    const blog: BlogData = blogData.data[0];
+    clearTimeout(timeoutId);
 
-    console.log(blogData);
+    const blog: BlogData = blogData.data[0];
 
     const renderContent = (content: Content[]) => {
       return content.map((block, index) => {
@@ -424,7 +431,11 @@ export default async function BlogDetailPage({
         </article>
       </div>
     );
-  } catch (error) {
+  } catch (error: any) {
+    if (error instanceof Error && error.name === "AbortError") {
+      console.error("Request timeout fetching blog:", slug);
+    }
+
     console.error("Error fetching blog:", error);
     notFound();
   }

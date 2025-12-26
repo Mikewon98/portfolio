@@ -58,15 +58,27 @@ services:
       - "traefik.http.routers.blog-http.middlewares=redirect-to-https"
       - "traefik.http.routers.blog-http.rule=Host(`michaelyze.com`)"
       - "traefik.http.routers.blog-http.entrypoints=web"
-      # Add cache control headers to prevent stale client code
-      - "traefik.http.middlewares.cache-control.headers.customresponseheaders.Cache-Control=no-cache, no-store, must-revalidate"
+      # Add sticky sessions to prevent Server Action mismatch (remove this if causing issues)
+      - "traefik.http.services.blog.loadbalancer.sticky.cookie=true"
+      - "traefik.http.services.blog.loadbalancer.sticky.cookie.name=server_id"
+      - "traefik.http.services.blog.loadbalancer.sticky.cookie.secure=true"
+      - "traefik.http.services.blog.loadbalancer.sticky.cookie.httpOnly=true"
+      # Better cache control - allow caching of static assets
+      - "traefik.http.middlewares.cache-control.headers.customresponseheaders.Cache-Control=public, max-age=3600, stale-while-revalidate=86400"
+      # # Add cache control headers to prevent stale client code (replaced by the above)
+      # - "traefik.http.middlewares.cache-control.headers.customresponseheaders.Cache-Control=no-cache, no-store, must-revalidate"
       - "traefik.http.routers.blog.middlewares=cache-control"
       - "com.centurylinklabs.watchtower.enable=true"
     deploy:
       replicas: 3
+      # update_config:
+      #   parallelism: 3 # Update all replicas at once to avoid version mismatch
+      #   delay: 0s
+      # Replace with above if causing issues
       update_config:
-        parallelism: 3 # Update all replicas at once to avoid version mismatch
-        delay: 0s
+      parallelism: 1 # Update one at a time
+      delay: 10s # Wait 10s between updates
+      order: start-first # Start new container before stopping old one
     env_file:
       - .env
 volumes:
