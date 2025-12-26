@@ -47,7 +47,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # Lets encrypt
       - letsencrypt:/letsencrypt
-  blog-1:
+  blog:
     image: ghcr.io/mikewon98/blog:stable
     restart: unless-stopped
     labels:
