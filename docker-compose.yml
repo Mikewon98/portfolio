@@ -47,7 +47,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # Lets encrypt
       - letsencrypt:/letsencrypt
-  blog:
+  blog-1:
     image: ghcr.io/mikewon98/blog:stable
     restart: unless-stopped
     labels:
@@ -71,17 +71,30 @@ services:
       # - "traefik.http.middlewares.cache-control.headers.customresponseheaders.Cache-Control=no-cache, no-store, must-revalidate"
       - "traefik.http.routers.blog.middlewares=cache-control"
       - "com.centurylinklabs.watchtower.enable=true"
-    deploy:
-      replicas: 3
-      update_config:
-        parallelism: 3 # Update all replicas at once to avoid version mismatch
-        delay: 0s
-      # Replace with above if causing issues
-      # update_config:
-      #   parallelism: 1 # Update one at a time
-      #   delay: 10s # Wait 10s between updates
-      #   order: start-first # Start new container before stopping old one
     env_file:
       - .env
+
+  blog-2:
+  image: ghcr.io/mikewon98/blog:stable
+  container_name: portfolio-blog-2
+  restart: unless-stopped
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.services.blog.loadbalancer.server.port=3000"
+    - "com.centurylinklabs.watchtower.enable=true"
+  env_file:
+    - .env
+
+  blog-3:
+    image: ghcr.io/mikewon98/blog:stable
+    container_name: portfolio-blog-3
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.blog.loadbalancer.server.port=3000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    env_file:
+      - .env
+
 volumes:
   letsencrypt:
