@@ -74,29 +74,5 @@ services:
     env_file:
       - .env
 
-  blog-2:
-    image: ghcr.io/mikewon98/blog:stable
-    container_name: portfolio-blog-2
-    restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.blog.loadbalancer.server.port=3000"
-      - "traefik.http.routers.blog.service=blog"
-      - "com.centurylinklabs.watchtower.enable=true"
-    env_file:
-      - .env
-
-  blog-3:
-    image: ghcr.io/mikewon98/blog:stable
-    container_name: portfolio-blog-3
-    restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.blog.loadbalancer.server.port=3000"
-      - "traefik.http.routers.blog.service=blog"
-      - "com.centurylinklabs.watchtower.enable=true"
-    env_file:
-      - .env
-
 volumes:
   letsencrypt:
