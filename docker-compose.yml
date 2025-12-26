@@ -16,6 +16,8 @@ services:
       - WATCHTOWER_POLL_INTERVAL=300
       - REPO_USER=mikewon98
       - REPO_PASS=${GITHUB_TOKEN}
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${DISCORD_WEBHOOK_URL}
   reverse-proxy:
     image: traefik:v3.6
     container_name: traefik
