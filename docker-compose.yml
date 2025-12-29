@@ -25,7 +25,7 @@ services:
     container_name: traefik
     restart: unless-stopped
     command:
-      - "--log.level=ERROR"
+      - "--log.level=DEBUG"
       - "--providers.docker=true"
       - "--api.insecure=true"
       - "--providers.docker.exposedbydefault=false"
