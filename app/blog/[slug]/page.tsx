@@ -27,8 +27,6 @@ export default async function BlogDetailPage({
 
     const blog: BlogData = blogData.data[0];
 
-    console.log(blogData);
-
     const renderContent = (content: Content[]) => {
       return content.map((block, index) => {
         // Render paragraphs
