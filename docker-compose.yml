@@ -18,8 +18,6 @@ services:
       - REPO_PASS=${GITHUB_TOKEN}
       - WATCHTOWER_NOTIFICATIONS=shoutrrr
       - WATCHTOWER_NOTIFICATION_URL=${DISCORD_WEBHOOK_URL}
-      # - WATCHTOWER_TIMEOUT=60s # Add this
-      # - WATCHTOWER_LIFECYCLE_HOOKS=true # Add this
   reverse-proxy:
     image: traefik:v3.6
     container_name: traefik
@@ -42,8 +40,6 @@ services:
       - "80:80"
       # The https port
       - "443:443"
-      # The web UI ((enabled by api.insecure=true)
-      # - "8080:8080"
     volumes:
       # So that Traefik can listen to docker events
       - /var/run/docker.sock:/var/run/docker.sock
@@ -81,11 +77,6 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
-      # Cache control - Better cache control - allow caching of static assets
-      # - "traefik.http.middlewares.cache-control.headers.customresponseheaders.Cache-Control=public, max-age=3600, stale-while-revalidate=86400"
-      # Add cache control headers to prevent stale client code (replaced by the above)
-      # - "traefik.http.middlewares.cache-control.headers.customresponseheaders.Cache-Control=no-cache, no-store, must-revalidate"
-
       # Apply middlewares to HTTPS router
       - "traefik.http.routers.blog.middlewares=cache-control"
 
@@ -96,12 +87,11 @@ services:
 
       # Watchtower
       - "com.centurylinklabs.watchtower.enable=true"
-    # deploy:
-    # replicas: 3
-    # update_config:
-    #   parallelism: 3 # Update all replicas at once to avoid version mismatch
-    #   delay: 0s
     env_file:
       - .env
 volumes:
   letsencrypt:
+
+networks:
+  default:
+    name: portfolio_default
