@@ -78,7 +78,7 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
 
       # Apply middlewares to HTTPS router
-      - "traefik.http.routers.blog.middlewares=cache-control"
+      # - "traefik.http.routers.blog.middlewares=cache-control"
 
       # Rate limiting (protection against bots)
       - "traefik.http.middlewares.rate-limit.ratelimit.average=100"
