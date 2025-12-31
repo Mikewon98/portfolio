@@ -1,3 +1,4 @@
+import PersonalProjects from "./components/PersonalProjects";
 import FeaturedBlogs from "./components/FeaturedBlog";
 import { fetchBlogs } from "./service/blogService";
 import HeroSection from "./components/HeroSection";
@@ -17,6 +18,7 @@ export default async function Home() {
       <TechStack />
       <Experience />
       <Projects />
+      <PersonalProjects />
       <FeaturedBlogs blogs={featuredBlogs.data} />
       <Contact />
     </div>
