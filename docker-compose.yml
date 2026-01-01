@@ -8,6 +8,7 @@ services:
       - "--include-restarting"
       - "--stop-timeout"
       - "60s"
+      - "--scope=portfolio"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
@@ -87,6 +88,7 @@ services:
 
       # Watchtower
       - "com.centurylinklabs.watchtower.enable=true"
+      - "com.centurylinklabs.watchtower.scope=portfolio"  
     env_file:
       - .env
 volumes:
