@@ -13,6 +13,14 @@ const projects = [
     tech: ["JavaScript", "TypeScript"],
     link: "https://errornarrator.michaelyze.com",
   },
+  {
+    title: "Smart Ringer",
+    description:
+      "Smart Ringer selectively silences or vibrates calls from specific contacts while keeping your phone active for everyone else.",
+    image: "./smart-ringer.png",
+    tech: ["Flutter", "Dart"],
+    link: "https://smartringer.michaelyze.com",
+  },
 ];
 
 export default function PersonalProjects() {
