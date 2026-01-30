@@ -15,8 +15,8 @@ services:
       - "com.centurylinklabs.watchtower.enable=false"
     environment:
       - WATCHTOWER_POLL_INTERVAL=300
-      - REPO_USER=mikewon98
-      - REPO_PASS=${GITHUB_TOKEN}
+      # - REPO_USER=mikewon98
+      # - REPO_PASS=${GITHUB_TOKEN}
       - WATCHTOWER_NOTIFICATIONS=shoutrrr
       - WATCHTOWER_NOTIFICATION_URL=${DISCORD_WEBHOOK_URL}
   reverse-proxy:
