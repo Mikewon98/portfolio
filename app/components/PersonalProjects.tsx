@@ -21,6 +21,14 @@ const projects = [
     tech: ["Flutter", "Dart"],
     link: "https://smartringer.michaelyze.com",
   },
+  {
+    title: "SpeedMind",
+    description:
+      "A high-performance Speed Reading SaaS that uses RSVP and comprehension training so you read faster without losing understanding.",
+    image: "./speedmind.png",
+    tech: ["NextJS", "TypeScript"],
+    link: "https://speedmind.michaelyze.com",
+  },
 ];
 
 export default function PersonalProjects() {
