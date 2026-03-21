@@ -57,10 +57,14 @@ services:
       # - "traefik.http.routers.blog.rule=Host(`michaelyze.com`)"
       - "traefik.http.routers.blog.entrypoints=websecure"
       - "traefik.http.routers.blog.tls.certresolver=myresolver"
+      # Add this — explicitly request cert for www too:
+      - "traefik.http.routers.blog.tls.domains[0].main=michaelyze.com"
+      - "traefik.http.routers.blog.tls.domains[0].sans=www.michaelyze.com"
 
       # HTTP redirect router
       - "traefik.http.routers.blog-http.middlewares=redirect-to-https"
-      - "traefik.http.routers.blog-http.rule=Host(`michaelyze.com`)"
+      # - "traefik.http.routers.blog-http.rule=Host(`michaelyze.com`)"
+      - "traefik.http.routers.blog-http.rule=Host(`michaelyze.com`) || Host(`www.michaelyze.com`)"
       - "traefik.http.routers.blog-http.entrypoints=web"
 
       # Service configuration
