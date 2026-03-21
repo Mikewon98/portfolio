@@ -1,4 +1,3 @@
-import { fetchBlogs } from "./service/blogService";
 import { BlogData } from "./types/blog";
 import { MetadataRoute } from "next";
 
@@ -49,8 +48,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs`, {
-      signal: AbortSignal.timeout(5000),
-      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+      // no-store forces dynamic rendering and breaks static sitemap generation
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -71,7 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch (error) {
     console.warn(
       "Failed to fetch blogs for sitemap, continuing with static routes only:",
-      error
+      error,
     );
     // Return static routes only if blog fetch fails
     return routes;

@@ -5,29 +5,37 @@ type BlogResponse = {
   meta: any;
 };
 
+const emptyBlogs: BlogResponse = { data: [], meta: {} };
+
+const FETCH_TIMEOUT_MS = 12_000;
+const REVALIDATE_SECONDS = 300;
+
 export const fetchBlogs = async ({
   url,
 }: {
   url: string;
 }): Promise<BlogResponse> => {
-  const reqOptions: RequestInit = {
-    // headers: {
-    //   Authorization: `Bearer ${process.env.API_TOKEN}`,
-    // },
-    // cache: "no-store", /api/blogs
-  };
+  if (!config.api || config.api === "undefined") {
+    console.warn("fetchBlogs: NEXT_PUBLIC_STRAPI_URL is not set");
+    return emptyBlogs;
+  }
 
   try {
-    const response = await fetch(`${config.api}${url}`, reqOptions);
+    const response = await fetch(`${config.api}${url}`, {
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      next: { revalidate: REVALIDATE_SECONDS },
+    });
 
-    if (response.status != 200) {
-      throw new Error(`Failed to fetch blogs: ${response.status}`);
+    if (!response.ok) {
+      console.warn(
+        `fetchBlogs: ${response.status} for ${url} — using empty list for build/runtime`,
+      );
+      return emptyBlogs;
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
-    console.error(error);
-    throw error;
+    console.warn("fetchBlogs failed, using empty list:", error);
+    return emptyBlogs;
   }
 };

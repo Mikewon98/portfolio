@@ -19,7 +19,7 @@ export default async function Home() {
       <Experience />
       <Projects />
       <PersonalProjects />
-      <FeaturedBlogs blogs={featuredBlogs.data} />
+      <FeaturedBlogs blogs={featuredBlogs.data ?? []} />
       <Contact />
     </div>
   );
