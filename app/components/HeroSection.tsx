@@ -190,7 +190,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 bg-linear-to-r from-green-400 to-green-600 dark:from-purple-500 dark:to-purple-700 rounded-full blur-3xl opacity-30 animate-pulse"></div>
               <div className="relative w-full aspect-square rounded-full overflow-hidden glass p-2 animate-float">
                 <img
-                  src="/Michaelwon.jpg"
+                  src="/profile-image.jpeg"
                   alt="Michael W Metaferia"
                   className="w-full h-full object-cover rounded-full"
                 />
