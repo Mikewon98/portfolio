@@ -15,6 +15,9 @@ import {
   BookOpen,
   Mail,
 } from "lucide-react";
+import MichaelyzeIcon from "./icons/michaelyze_icon";
+import MichaelyzePurpleIcon from "./icons/michaelyze_purple_icon";
+import Michaelyze from "./icons/michaelyze";
 
 export default function ClientLayout({
   children,
@@ -38,7 +41,7 @@ export default function ClientLayout({
       document.documentElement.classList.remove("dark");
     } else {
       const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        "(prefers-color-scheme: dark)",
       ).matches;
       setIsDarkMode(prefersDark);
       if (prefersDark) {
@@ -139,11 +142,17 @@ export default function ClientLayout({
           <div className="flex items-center justify-between">
             <Link
               href={createPageUrl("Home")}
-              className="flex items-center space-x-2"
+              className="flex items-center justify-between space-x-4"
             >
-              <div className="w-10 h-10 rounded-full bg-linear-to-r from-green-400 to-green-600 dark:from-purple-500 dark:to-purple-700 flex items-center justify-center font-bold text-white">
-                MW
-              </div>
+              {/* <div className="w-10 h-10 rounded-full bg-linear-to-r from-green-400 to-green-600 dark:from-purple-500 dark:to-purple-700 flex items-center justify-center font-bold text-white">
+                <MichaelyzeIcon className="w-5 h-5" />
+              </div> */}
+              {/* <MichaelyzePurpleIcon className="w-8 h-8 fill-purple-500" /> */}
+              <img
+                src="/michaelyze_icon.png"
+                alt="Michael W Metaferia"
+                className="w-10 h-10"
+              />
               <span className="text-xl font-bold text-gray-900 dark:text-white">
                 Michael Wondwossen
               </span>
@@ -236,6 +245,7 @@ export default function ClientLayout({
             <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
               Built with passion and code ✨
             </p>
+            <Michaelyze className="inline w-28 h-6 mt-2 fill-purple-500" />
           </div>
         </div>
       </footer>

@@ -29,6 +29,14 @@ const projects = [
     tech: ["NextJS", "TypeScript"],
     link: "https://speedmind.michaelyze.com",
   },
+  {
+    title: "Pascal-Case Class Naming",
+    description:
+      "A Vs Code Extension that automatically converts class names to Pascal Case.",
+    image: "./extension-icons.png",
+    tech: ["Vs Code Extension", "TypeScript", "JavaScript"],
+    link: "https://marketplace.visualstudio.com/items?itemName=MichaelWondwossen.pascal-case-class-naming",
+  },
 ];
 
 export default function PersonalProjects() {
