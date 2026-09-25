@@ -8,7 +8,7 @@ const experiences = [
     title: "Frontend Developer",
     company: "Aquila ICT Solution",
     location: "Addis Ababa, Ethiopia",
-    period: "May 2024 - Present",
+    period: "May 2024 - May 2026",
     description:
       "Developed a payment gateway - Fenan Payment Platform. Built the Ethio Djibouti Railway Project - Wagon booking system, transforming manual processes to automated solutions.",
     current: true,

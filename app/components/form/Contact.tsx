@@ -1,6 +1,6 @@
 "use client";
 
-import { Send, MapPin, Phone, Mail, Loader2 } from "lucide-react";
+import { Send, MapPin, Mail, Loader2, Linkedin } from "lucide-react";
 import { type FormState, submitContactForm } from "./action";
 import { useActionState, ViewTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
@@ -65,17 +65,17 @@ export default function Contact() {
 
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-linear-to-r from-green-400 to-green-600 dark:from-purple-500 dark:to-purple-700 flex items-center justify-center shrink-0">
-                  <Phone className="w-6 h-6 text-white" />
+                  <Linkedin className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                    Phone
+                    LinkedIn
                   </h4>
                   <a
-                    href="tel:+251923974353"
+                    href="https://www.linkedin.com/in/michael-metaferia-9837491b3"
                     className="text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-purple-400 transition-colors"
                   >
-                    (+251) 923 974 353
+                    Michael Metaferia
                   </a>
                 </div>
               </div>
@@ -89,7 +89,7 @@ export default function Contact() {
                     Location
                   </h4>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Addis Ababa, Ethiopia
+                    Mississauga, Ontario, Canada
                   </p>
                 </div>
               </div>
