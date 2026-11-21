@@ -23,8 +23,6 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
-ARG NEXT_PUBLIC_STRAPI_URL
-ENV NEXT_PUBLIC_STRAPI_URL=${NEXT_PUBLIC_STRAPI_URL}
 # ARG NEXT_PUBLIC_RESEND_API_KEY
 # ENV NEXT_PUBLIC_RESEND_API_KEY=${NEXT_PUBLIC_RESEND_API_KEY}
 # ARG GITHUB_TOKEN
@@ -35,7 +33,10 @@ ENV NEXT_PUBLIC_STRAPI_URL=${NEXT_PUBLIC_STRAPI_URL}
 ARG NEXT_PUBLIC_ENV_VARIABLE
 ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
 
-RUN npm run build
+# Payload loads its config during the build, so it needs placeholder values.
+# The real PAYLOAD_SECRET / DATABASE_URI come from .env + docker-compose at runtime.
+# Blog pages are dynamic, so the database is never queried during the build.
+RUN PAYLOAD_SECRET=build-time-placeholder     DATABASE_URI=postgres://build:build@127.0.0.1:5432/build     npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -54,6 +55,9 @@ COPY --from=builder /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Folder for images uploaded through Payload (mounted as a volume in production)
+RUN mkdir -p /app/media && chown nextjs:nodejs /app/media
 
 USER nextjs
 

@@ -96,8 +96,36 @@ services:
       - "com.centurylinklabs.watchtower.scope=blog"
     env_file:
       - .env
+    environment:
+      # Talk to the postgres service over the internal Docker network.
+      - DATABASE_URI=postgres://payload:${POSTGRES_PASSWORD}@postgres:5432/payload
+    volumes:
+      # Images uploaded through the Payload admin (/admin).
+      - media:/app/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=payload
+      - POSTGRES_DB=payload
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payload -d payload"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    # No ports published: only reachable from containers on this network.
 volumes:
   letsencrypt:
+  pgdata:
+  media:
 
 networks:
   default:

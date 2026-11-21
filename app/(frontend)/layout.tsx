@@ -1,5 +1,5 @@
-import ClientLayout from "./components/ClientLayout";
-import { siteMetadata } from "../lib/site-metadata";
+import ClientLayout from "../components/ClientLayout";
+import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
 // @ts-ignore
 import "./globals.css";

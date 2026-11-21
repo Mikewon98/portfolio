@@ -1,12 +1,14 @@
-import { fetchBlogs } from "../service/blogService";
-import { BlogData } from "../types/blog";
-import Image from "next/image";
+import { getBlogs } from "@/app/service/blogService";
+import BlogCardImage from "@/app/components/BlogCardImage";
 import Link from "next/link";
 
-export default async function BlogPage() {
-  const blog = await fetchBlogs({ url: "/api/blogs?populate=*" });
+// Rendered per request: posts are read from Postgres via Payload's Local API
+// (a few ms). This avoids serving the empty snapshot taken during `next build`,
+// when the database is not reachable.
+export const dynamic = "force-dynamic";
 
-  const blogs: BlogData[] = blog.data || [];
+export default async function BlogPage() {
+  const blogs = await getBlogs();
 
   return (
     <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
@@ -43,12 +45,7 @@ export default async function BlogPage() {
                         Featured
                       </div>
                     )}
-                    <Image
-                      src={`${post.Thumbnail.url}`}
-                      alt={post.Thumbnail.alternativeText || post.Title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
+                    <BlogCardImage blog={post} />
                   </div>
 
                   {/* Content */}
@@ -70,6 +67,7 @@ export default async function BlogPage() {
                       </svg>
                       <time dateTime={post.date}>
                         {new Date(post.date).toLocaleDateString("en-US", {
+                  timeZone: "UTC",
                           year: "numeric",
                           month: "long",
                           day: "numeric",
@@ -79,12 +77,12 @@ export default async function BlogPage() {
 
                     {/* Title */}
                     <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                      {post.Title}
+                      {post.title}
                     </h2>
 
                     {/* Summary */}
                     <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                      {post.Summary}
+                      {post.summary}
                     </p>
 
                     {/* Read More */}

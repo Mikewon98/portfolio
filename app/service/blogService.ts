@@ -1,41 +1,52 @@
-import config from "./config";
+import config from "@payload-config";
+import { getPayload, type Where } from "payload";
+import type { Blog } from "../types/blog";
 
-type BlogResponse = {
-  data: any[];
-  meta: any;
-};
+/**
+ * Blog data comes straight from Payload's Local API (same process, no HTTP).
+ * Every function swallows errors and returns an empty result so that
+ * `next build` (where the database is not reachable) and DB hiccups never
+ * crash the site – the pages just show "no posts" until the next revalidation.
+ */
 
-const emptyBlogs: BlogResponse = { data: [], meta: {} };
+const published: Where = { _status: { equals: "published" } };
 
-const FETCH_TIMEOUT_MS = 12_000;
-const REVALIDATE_SECONDS = 300;
-
-export const fetchBlogs = async ({
-  url,
-}: {
-  url: string;
-}): Promise<BlogResponse> => {
-  if (!config.api || config.api === "undefined") {
-    console.warn("fetchBlogs: NEXT_PUBLIC_STRAPI_URL is not set");
-    return emptyBlogs;
-  }
-
+export async function getBlogs({
+  featured,
+  limit = 100,
+}: { featured?: boolean; limit?: number } = {}): Promise<Blog[]> {
   try {
-    const response = await fetch(`${config.api}${url}`, {
-      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-      next: { revalidate: REVALIDATE_SECONDS },
+    const payload = await getPayload({ config });
+    const where: Where = featured
+      ? { and: [published, { isFeatured: { equals: true } }] }
+      : published;
+
+    const result = await payload.find({
+      collection: "blogs",
+      where,
+      sort: "-date",
+      depth: 1,
+      limit,
     });
-
-    if (!response.ok) {
-      console.warn(
-        `fetchBlogs: ${response.status} for ${url} — using empty list for build/runtime`,
-      );
-      return emptyBlogs;
-    }
-
-    return await response.json();
+    return result.docs;
   } catch (error) {
-    console.warn("fetchBlogs failed, using empty list:", error);
-    return emptyBlogs;
+    console.warn("getBlogs failed, using empty list:", error);
+    return [];
   }
-};
+}
+
+export async function getBlogBySlug(slug: string): Promise<Blog | null> {
+  try {
+    const payload = await getPayload({ config });
+    const result = await payload.find({
+      collection: "blogs",
+      where: { and: [published, { slug: { equals: slug } }] },
+      depth: 1,
+      limit: 1,
+    });
+    return result.docs[0] ?? null;
+  } catch (error) {
+    console.warn(`getBlogBySlug(${slug}) failed:`, error);
+    return null;
+  }
+}

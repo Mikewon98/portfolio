@@ -1,15 +1,27 @@
+import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "deserving-bouquet-d41dc59d47.media.strapiapp.com",
-      },
-    ],
+    // Blog images are uploaded to Payload and served from this same site.
+    localPatterns: [{ pathname: "/api/media/file/**" }],
   },
   output: "standalone",
+  turbopack: {
+    root: path.resolve(dirname),
+  },
+  webpack: (webpackConfig) => {
+    webpackConfig.resolve.extensionAlias = {
+      ".cjs": [".cts", ".cjs"],
+      ".js": [".ts", ".tsx", ".js", ".jsx"],
+      ".mjs": [".mts", ".mjs"],
+    };
+    return webpackConfig;
+  },
   async headers() {
     return [
       {
@@ -34,4 +46,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig, { devBundleServerPackages: false });

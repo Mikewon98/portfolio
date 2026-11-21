@@ -1,5 +1,5 @@
 import { FeaturedBlogsProps } from "../types/blog";
-import Image from "next/image";
+import BlogCardImage from "./BlogCardImage";
 import Link from "next/link";
 
 export default function FeaturedBlogs({ blogs }: FeaturedBlogsProps) {
@@ -27,12 +27,7 @@ export default function FeaturedBlogs({ blogs }: FeaturedBlogsProps) {
               className="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="relative h-48 w-full overflow-hidden">
-                <Image
-                  src={`${blog.Thumbnail.url}`}
-                  alt={blog.Thumbnail.alternativeText || blog.Title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+                <BlogCardImage blog={blog} />
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-3">
@@ -51,6 +46,7 @@ export default function FeaturedBlogs({ blogs }: FeaturedBlogsProps) {
                   </svg>
                   <time dateTime={blog.date}>
                     {new Date(blog.date).toLocaleDateString("en-US", {
+                  timeZone: "UTC",
                       year: "numeric",
                       month: "long",
                       day: "numeric",
@@ -58,10 +54,10 @@ export default function FeaturedBlogs({ blogs }: FeaturedBlogsProps) {
                   </time>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {blog.Title}
+                  {blog.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
-                  {blog.Summary}
+                  {blog.summary}
                 </p>
                 <div className="mt-4 flex items-center text-blue-600 dark:text-blue-400 font-medium">
                   Read more

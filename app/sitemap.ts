@@ -1,5 +1,7 @@
-import { BlogData } from "./types/blog";
+import { getBlogs } from "./service/blogService";
 import { MetadataRoute } from "next";
+
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://michaelyze.com";
@@ -38,44 +40,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Handle API fetch failure gracefully during build
-  let blogPosts: MetadataRoute.Sitemap = [];
+  // getBlogs() never throws: if the database is unreachable (e.g. during
+  // `next build`) it returns [] and the sitemap contains static routes only.
+  const blogs = await getBlogs();
 
-  try {
-    if (!process.env.NEXT_PUBLIC_STRAPI_URL) {
-      console.log("Skipping blog posts in sitemap - API URL not available");
-      return routes;
-    }
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/blogs`, {
-      signal: AbortSignal.timeout(8000),
-      // no-store forces dynamic rendering and breaks static sitemap generation
-      next: { revalidate: 3600 },
-    });
-
-    if (!res.ok) {
-      console.warn("API returned non-OK status, skipping static generation");
-      return routes;
-    }
-
-    const blogs = await res.json();
-
-    if (blogs.data && blogs.data.length > 0) {
-      blogPosts = blogs.data.map((blog: BlogData) => ({
-        url: `${baseUrl}/blog/${blog.slug}`,
-        lastModified: new Date(blog.date),
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
-      }));
-    }
-  } catch (error) {
-    console.warn(
-      "Failed to fetch blogs for sitemap, continuing with static routes only:",
-      error,
-    );
-    // Return static routes only if blog fetch fails
-    return routes;
-  }
+  const blogPosts: MetadataRoute.Sitemap = blogs.map((blog) => ({
+    url: `${baseUrl}/blog/${blog.slug}`,
+    lastModified: new Date(blog.updatedAt || blog.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   return [...routes, ...blogPosts];
 }
