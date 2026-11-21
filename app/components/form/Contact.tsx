@@ -89,7 +89,7 @@ export default function Contact() {
                     Location
                   </h4>
                   <p className="text-gray-600 dark:text-gray-400">
-                    Mississauga, Ontario, Canada
+                    Toronto, Ontario, Canada
                   </p>
                 </div>
               </div>
