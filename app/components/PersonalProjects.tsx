@@ -37,6 +37,14 @@ const projects = [
     tech: ["Vs Code Extension", "TypeScript", "JavaScript"],
     link: "https://marketplace.visualstudio.com/items?itemName=MichaelWondwossen.pascal-case-class-naming",
   },
+  {
+    title: "Flutter Palette Pro",
+    description:
+      "A simple web app that generates color palettes for Flutter projects, making it easy to create visually appealing designs and it helps change flutter hex colors to RGB and vice versa.",
+    image: "./flutterpalette.png",
+    tech: ["TypeScript", "NextJS"],
+    link: "https://flutterpalette.michaelyze.com",
+  },
 ];
 
 export default function PersonalProjects() {
